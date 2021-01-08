@@ -1,0 +1,7 @@
+#rule {
+	transition: opacity 2s;
+}
+
+#rule:active {
+	opacity: 0.1;
+}

@@ -1,0 +1,72 @@
+{% extends ""
+		<div class="container-md" id="test-area">
+			<div class="mt-4 mb-3 d-grid gap-2 col-3  text-center" style="margin: 0 auto;">
+				<button id="submit-test" class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#confirmationMod" style="display: inline-block;">홈페이지</button>
+			</div>
+			<div class="row" style="flex-start">
+				<div class="align-self-start border border-primary border-3 mt-3" style="width: 500px; margin: 0px auto;">
+				{% for key, item in wrongs.items %}
+					<p class="text-center">
+					<a class="btn btn-primary" data-bs-toggle="collapse" href="#rightCollapseExample-{{ subkey }}" role="button" aria-expanded="false" aria-controls="rightCollapseExample-{{ subkey }}">
+							Link with href
+						</a>
+					</p>
+					<div class="collapse" id="RightCollapseExample-{{ subkey }}">
+					{% for subkey, subitem in wrongs.key.items %}
+						<div class="card card-body">
+							<h6>What was the question?</h6>
+							{% if subitem.Problem.Picture %}
+							<div class="col-12 mt-2 text-center">
+								{% load static %}
+								<img src="{{ subitem.Problem.Picture }}" alt=".." />
+							</div>
+							{% endif %}
+							{% if subitem.Problem.Descriptions %}
+							<div class="col-12 mt-4 text-start">
+								<h6 class="m-auto">asdfasdfasdf</h6>
+								<ul>
+									{% for desc_key, desc_item in subitem.Problem.Descriptions.items %}
+									<li>{{ desc_item }}</li>
+									{% endfor %}
+								</ul>
+							</div>
+							{% endif %}
+							<hr>
+							<div class="col-12 mt-2 text-start">
+								<ul class="list-group">
+								{% for ansKey, ansAns in subitem.Problem.Answers %}
+								{% for rightAnswerKey, rightAnswerValues in subitem.Rights %}	
+								<li class="list-group-item bg-success text-white">{{ ansKey }}. {{ ansAns }}</li>
+								{% endfor %}
+
+								{% for wrongAnswerKey, wrongAnswerValues in subitem.Wrongs %}	
+								<li class="list-group-item bg-danger text-white">{{ ansKey }}. {{ ansAns }}</li>
+								{% endfor %}
+								{% endfor %}
+								</ul>
+							</div>
+						</div>
+					{% endfor %}
+					</div>
+				{% endfor %}
+				</div>
+				<div class="align-self-start border border-primary border-3 text-center mt-3" style="width: 500px; margin: 0px auto;">
+					<p>
+						<a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample1" role="button" aria-expanded="false" aria-controls="collapseExample1">
+							    Link with href
+						</a>
+					</p>
+					<div class="collapse" id="collapseExample1">
+						  <div class="card card-body">
+						  	Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+						  </div>
+						  <div class="card card-body">
+						  	Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+						  </div>
+						  <div class="card card-body">
+						  	Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+						  </div>
+					</div>
+				</div>
+			</div>
+		</div>

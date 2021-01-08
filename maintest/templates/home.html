@@ -1,0 +1,30 @@
+{% extends "orig_temp.html" %}
+
+{% block content %}
+		<div class="container-sm">
+			<div class="row" style="justify-content: center; align-items: flex-start; margin: 10px;">
+				<div class="col">
+					<div class="card border-light" style="width: 25rem; margin: 10px auto auto auto;">
+						{% load static %}
+						<img src="{% static 'img/1.jpg' %}" class="card-img-top" alt="...">
+						<div class="card-body">
+							<h5 class="card-title">1종 2종 (보통, 대형, 특수) 면허필기 연습시험</h5>
+							<p class="card-text">무료로 시험보기!</p>
+							<a href="{% url 'first_test_ready' %}" class="btn btn-primary">바로가기</a>
+						</div>
+					</div>
+				</div>
+				<div class="col">
+					<div class="card border-light" style="width: 25rem; margin: 10px auto auto auto;">
+						{% load static %}
+						<img src="{% static 'img/2.jpg' %}" class="card-img-top" alt="...">
+						<div class="card-body">
+							<h5 class="card-title">1종 2종 표지판, 노면표지 테스트</h5>
+							<p class="card-text">무료로 시험</p>
+							<a href="{% url 'visual_test_ready' %}" class="btn btn-primary">바로가기</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+{% endblock %}

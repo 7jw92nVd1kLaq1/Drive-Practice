@@ -1,0 +1,123 @@
+{% extends "orig_temp.html" %}
+
+{% block content %}
+	<form id="test-cont" method="POST" action="{% url 'result' %}">
+			{% csrf_token %}
+			<div class="container-md" id="test-area">
+				<div class="row mt-2">
+					<h3 id="text-time" class="mb-2 fw-bold text-center"></h3>
+				</div>
+				{% for key, item in questions.items %}
+				<div class="row mb-3">
+					<div class="col-lg-8 m-auto border border-primary border-4 rounded">
+						<div class="row">
+							<h5 class="fw-bold mt-2" id="{{ key }}-question">{{ key }}. {{ item.Question }}</h5>
+							<br>
+							<br>
+							{% if item.Picture %}
+							{% load static %}
+							<div class="col-12 mt-4 text-center">
+								<img src="{% static item.Picture %}">
+							</div>
+							{% endif %}
+							{% if item.Descriptions %}
+							<div class="row">
+								<div class="col">
+									<br>
+									<h5>사진설명:</h5>
+									<ul>
+								{% for a, b in item.Descriptions.items %}				
+										<li class="fw-bold">{{ b }}</li>
+								{% endfor %}
+									</ul>
+								</div>
+							</div>
+							{% endif %}
+						</div>
+						<br>
+						<div class="row">
+							<div class="col">
+								<h6 class="text-end">선택한 답</h6>
+								<p class="text-end fw-bold" id="selected-answer-{{ key }}"></p>
+							</div>
+						</div>
+						<hr>
+						<div class="d-grid gap-2 mt-2 mb-2" id="question-{{ key }}">
+							<button onclick="checkToggle()" class="btn btn-primary mt-1" data-bs-toggle="button" autocomplete="off" value="A" aria-pressed="false">A. {{ item.Answers.A }}</button>
+							<button onclick="checkToggle()" class="btn btn-primary mt-1" data-bs-toggle="button" autocomplete="off" value="B" aria-pressed="false">B. {{ item.Answers.B }}</button>
+							<button onclick="checkToggle()" class="btn btn-primary mt-1" data-bs-toggle="button" autocomplete="off" value="C" aria-pressed="false">C. {{ item.Answers.C }}</button>
+							{% if item.Answers.D %}
+							<button onclick="checkToggle()" class="btn btn-primary mt-1" data-bs-toggle="button" autocomplete="off" value="D" aria-pressed="false">D. {{ item.Answers.D }}</button>
+							{% endif %}
+							{% if item.Answers.E %}
+							<button onclick="checkToggle()" class="btn btn-primary mt-1" data-bs-toggle="button" autocomplete="off" value="E" aria-pressed="false">E. {{ item.Answers.E }}</button>
+							{% endif %}
+							<input id="answer_{{ key }}" type="hidden" name="answer_{{ key }}" value="">
+						</div>
+						{% if item.hint %}
+						<hr>
+						<p class="text-center"><button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#hint-{{ key }}-collapse" aria-expanded="false" aria-controls="hint-{{ key }}-collapse">힌트</button></p>
+						<div class="collapse mb-2" id="hint-{{ key }}-collapse">
+							<div class="card card-body">
+								{{ item.hint }}
+							</div>
+						</div>
+						{% endif %}
+					</div>
+				</div>
+				{% if key == '20' or key == '40' %}
+				<div class="row mb-3">
+					<div class="col-lg-8 border border-3 border-primary mt-1" style="margin: 0px auto;">
+
+						<h3 id="text-time-{{ key }}" class="mt-1 mb-1 fw-bold text-center"></h3>
+						<p class="mt-3 text-center"><button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#check-answers-{{ key }}-collapse" aria-expanded="false" aria-controls="check-answers-{{ key }}-collapse">답안지</button></p>
+						<div class="collapse mb-2" id="check-answers-{{ key }}-collapse">
+							<div class="card card-body">	
+								<div class="row">
+									{% for a, b in questions.items %}
+									<div class="col-3">
+										<a href="#{{ a }}-question"><p class="fw-bold" id="answer-for-{{ a }}-{{ key }}">{{ a }}.</p></a>
+									</div>
+									{% endfor %}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				{% endif %}
+				{% endfor %}
+			</div>
+		</form>
+		<br>
+		<div class="mt-4 mb-3 d-grid gap-2 col-3  text-center" style="margin: 0 auto;">
+			<button id="submit-test" class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#confirmationMod" style="display: inline-block;">채점</button>
+		</div>
+		<!-- Modal -->
+		<div class="modal fade" id="confirmationMod" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">확인</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<p>정말 시험을 제출하시겠습니까?</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">돌아가기</button>
+						<button onclick="submitTest()" type="button" class="btn btn-primary">시험 제출</button>
+					</div>
+				</div>
+			</div>
+		</div>
+			
+		{% load static %}
+		<script src="{% static 'js/autoanswer.js' %}" type="text/javascript"></script>
+		{% if halves %}
+		{% load static %}
+		<script src="{% static 'js/timer1.js' %}" type="text/javascript"></script>
+		{% else %}
+		{% load static %}
+		<script src="{% static 'js/timer.js' %}" type="text/javascript"></script>
+		{% endif %}
+{% endblock %}

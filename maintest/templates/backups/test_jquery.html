@@ -1,0 +1,31 @@
+{% extends "orig_temp.html" %}
+
+{% load static %}
+{% block content %}
+		<div class="container-sm" id="rule">
+			<div class="row">
+				<div class="col bg-success border border-3">
+					<p class="text-center text-white">A test you will be taking will be a set of 10 questions that are randomly selected from the pool of 1000 questions.</p>
+					<p class="text-center text-white">Test will exactly last about 40 mins. If you are ready to begin, please press the button below to start the test.</p>
+				</div>
+			</div>
+			<div class="row" id="test-start-button">
+				<div class="col-1" style="margin: 10px auto;">
+					<button class="btn btn-primary" onclick="generateQuestions()" id="start-test">Start</button>
+				</div>
+			</div>
+		</div>
+		<form method="GET" action="/maintest">
+			<div class="container-sm" id="test-area">
+			</div>
+		</form>
+		{% load static %}
+		<script src="{% static 'js/client.js' %}" type="text/javascript"></script>
+		<script>
+		$(document).ready(function () {
+			$("#start-test").click(function () {
+				$("#rule").fadeOut();
+			});
+		});
+		</script>
+{% endblock %}

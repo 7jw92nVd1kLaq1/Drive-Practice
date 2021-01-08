@@ -1,0 +1,39 @@
+{% extends "orig_temp.html" %}
+
+{% block content %}
+		<div class="container-sm" id="rule">
+			<div class="row">
+				<div class="col bg-success border border-3">
+					<p class="text-center text-white">A test you will be taking will be a set of 10 questions that are randomly selected from the pool of 1000 questions.</p>
+					<p class="text-center text-white">Test will exactly last about 40 mins. If you are ready to begin, please press the button below to start the test.</p>
+				</div>
+			</div>
+			<form method="GET">
+				<div class="row" id="test-start-button">
+					<div class="col-1" style="margin: 10px auto;">
+						<button type="submit" class="btn btn-primary">Start</button>
+					</div>
+				</div>
+			</form>
+		</div>
+		<form method="GET" action="/maintest">
+			<div class="container-sm" id="test-area">
+				{% for key, item in questions.items %}
+				<div class="row">
+					<div class="col-lg-6 m-auto border border-3">
+						<div class="row">
+							<h5>{{ item.Question }}</h5>
+						</div>
+						<div class="btn-group-vertical mt-5">
+							<button class="btn btn-primary mt-1" data-bs-toggle="button">{{ item.Answers.A }}</button>
+							<button class="btn btn-primary mt-1" data-bs-toggle="button">{{ item.Answers.B }}</button>
+							<button class="btn btn-primary mt-1" data-bs-toggle="button">{{ item.Answers.C }}</button>
+							<button class="btn btn-primary mt-1" data-bs-toggle="button">{{ item.Answers.D }}</button>
+						</div>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+			<input type="submit" value="Submit">
+		</form>
+{% endblock %}

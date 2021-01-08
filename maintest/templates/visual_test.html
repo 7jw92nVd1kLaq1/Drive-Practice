@@ -1,0 +1,25 @@
+{% extends "orig_temp.html" %}
+
+{% load static %}
+{% block content %}
+		<div class="container-sm" id="rule">
+			<div class="row mt-5">
+				<div class="alert alert-success" role="alert" style="margin: 0 auto; max-width: 800px;">
+					  <h4 class="alert-heading text-center mb-3">1종 2종 (보통, 대형, 특수) 표지판 노면표지 테스트</h4>
+					  <ul>
+						  <li>약 100 문제에서 랜덤으로 <span class="fw-bold">20 문제</span> 출제</li>
+						  <li>제한시간: <span class="fw-bold">20분 </span></li>
+					  </ul>
+					  <hr>
+					  <p class="mb-0 text-center fw-bold">준비 되셨으면 아래 버튼을 눌러주세요</p>
+				</div>
+			</div>
+			<form action="{% url 'visual_test' %}" method="GET">
+				<div class="row mt-3" id="test-start-button">
+					<div class="col text-center" style="margin: 10px auto;">
+						<button class="btn btn-primary" type="submit" id="start-test">시작</button>
+					</div>
+				</div>
+			</form>
+		</div>
+{% endblock %}

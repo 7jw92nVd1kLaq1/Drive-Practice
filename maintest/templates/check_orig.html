@@ -1,0 +1,119 @@
+{% extends "orig_temp.html" %}
+
+{% block content %}
+		<div class="container-md" id="test-area">
+
+			<p class="mt-4 mb-3 text-center" id="topPage"><a href="/maintest" class="btn btn-primary btn-lg" tabindex="-1" role="button">홈페이지</a></p>
+			<div class="row" style="flex-start">
+
+				<div class="rounded-2 align-self-start border border-primary border-3 mt-3" style="width: 500px; margin: 0px auto;">
+					{% for key, item in rights.items %}
+					<p class="mt-3 text-center"><a class="btn btn-primary" data-bs-toggle="collapse" href="#rightCollapseExample-{{ key }}" role="button" aria-expanded="false" aria-controls="rightCollapseExample-{{ key }}">
+						맞은답 보기
+					</a></p>
+					<div class="collapse" id="rightCollapseExample-{{ key }}">
+						{% for subkey, subitem in item.items %}
+						<div class="card card-body mb-4">
+							<h5 class="fw-bold mb-3">{{ subkey }}. {{ subitem.Problem.Question }}</h5>
+							{% if subitem.Problem.Picture %}
+							<hr>
+							<div class="col-12 mt-2 text-center">
+								<p>
+									{% load static %}
+									<img src="{% static subitem.Problem.Picture %}" alt=".." />
+								</p>
+								{% if subitem.Descriptions %}
+								<div class="row">
+									<ul>
+										{% for x,y in subitem.Descriptions.items %}
+										<li>{{ y }}</li>
+										{% endfor %}
+									</ul>
+								</div>
+								{% endif %}
+							</div>
+							{% endif %}
+							<hr>
+							<div class="col-12 mt-2 text-start">
+								<ul class="list-group">
+								{% for ansKey, ansAns in subitem.Problem.Answers.items %}
+								{% if ansKey in subitem.Rights %}
+									<li class="list-group-item bg-success text-white">{{ ansKey }}. {{ ansAns }}</li>
+								{% else %}
+									<li class="list-group-item">{{ ansKey }}. {{ ansAns }}</li>
+								{% endif %}
+								{% endfor %}
+								</ul>
+							</div>
+							<hr>
+							<div class="col-12 mt-2 text-start">
+								<p class="fw-bold">{{ subitem.Problem.hint }}</p>
+							</div>
+						</div>
+						{% endfor %}
+					</div>
+					{% endfor %}
+				</div>
+				<div class="rounded-2 align-self-start border border-primary border-3 mt-3" style="width: 500px; margin: 0px auto;">
+					{% for key, item in wrongs.items %}
+					<p class="mt-3 text-center">
+					<a class="btn btn-primary" data-bs-toggle="collapse" href="#wrongCollapseExample-{{ key }}" role="button" aria-expanded="false" aria-controls="wrongCollapseExample-{{ key }}">
+						틀린답 보기
+					</a>
+					</p>
+
+					<div class="collapse" id="wrongCollapseExample-{{ key }}">
+						{% for subkey, subitem in item.items %}
+						<div class="card card-body mb-4">
+							<h5><span class="fw-bold mb-3">{{ subkey }}.</span> {{ subitem.Problem.Question }}</h5>
+							{% if subitem.Problem.Picture %}
+							<div class="col-12 mt-2 text-center">
+								<p>
+									{% load static %}
+									<img src="{% static subitem.Problem.Picture %}" alt=".." />
+								</p>
+								{% if subitem.Problem.Descriptions %}
+								<div class="row mt-2">
+									<div class="col-11 text-start" style="margin: 0px auto;">
+										<ul>
+											{% for x,y in subitem.Problem.Descriptions.items %}
+											<li>{{ y }}</li>
+											{% endfor %}
+										</ul>
+									</div>
+								</div>
+								{% endif %}
+							</div>
+							{% endif %}
+							<hr>
+							<div class="col-12 mt-2  mb-1 text-start">
+								<ul class="list-group">
+								{% for ansKey, ansAns in subitem.Problem.Answers.items %}
+								{% if ansKey in subitem.Rights %}
+									{% if ansKey in subitem.UserInput %}
+									<li class="list-group-item bg-success text-white">{{ ansKey }}. {{ ansAns }} (선택하신 답)</li>
+									{% else %}
+									<li class="list-group-item bg-success text-white">{{ ansKey }}. {{ ansAns }}</li>
+									{% endif %}
+								{% elif not anskey in subitem.Rights and ansKey in subitem.UserInput %}	
+									<li class="list-group-item bg-danger text-white">{{ ansKey }}. {{ ansAns }} (선택하신 답)</li>
+								{% else %}
+									<li class="list-group-item">{{ ansKey }}. {{ ansAns }}</li>
+								{% endif %}
+								{% endfor %}
+								</ul>
+							</div>
+							<hr>
+							<div class="col-12 mt-2 text-start">
+								<p class="fw-bold">{{ subitem.Problem.hint }}</p>
+							</div>
+						</div>
+						{% endfor %}
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+			<p class="mt-4 mb-3 text-center"><a href="#topPage" class="btn btn-primary btn-lg" tabindex="-1" role="button">상단으로 이동</a></p>
+			<p class="mb-3 text-center"><a href="/maintest" class="btn btn-primary btn-lg" tabindex="-1" role="button">홈페이지</a></p>
+		</div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "orig_temp.html" %}
+
+{% load static %}
+{% block content %}
+		<div class="container-md" id="test-score">
+			<div class="row mt-4">
+				<div class="col">
+					<h1 class="text-center fw-bold">점수: {{ result }}%</h2>
+					<h1 class="text-center fw-cold">총 {{ totalQues }} 문제에서 {{ totalCor }} 문제 맞추셨습니다!</h1>
+				</div>
+			</div>
+			<form action="/maintest" method="GET">
+				<div class="row" id="test-start-button">
+					<div class="col" style="margin: 10px auto;">
+						<button class="btn btn-primary text-center" type="submit" id="start-test" style="display: block; margin: 10px auto;">Back to Main Page</button>
+					</div>
+				</div>
+			</form>
+			<hr>
+			<form action="{% url 'review_answers' %}" method="GET">
+				<div class="row" id="review-button">
+					<div class="col text-center" style="margin: 10px auto;">
+						<button class="btn btn-primary" type="submit" id="review-test">시험 리뷰</button>
+					</div>
+				</div>
+			</form>
+
+		</div>
+{% endblock %}
